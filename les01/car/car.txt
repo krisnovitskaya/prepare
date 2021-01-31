@@ -1,0 +1,48 @@
+1.
+было:
+abstract class Car {
+    public Engine engine;
+
+
+стало:
+abstract class Car implements Moveable, Stopable{
+    private Engine engine;
+
+    ...
+}
+//есть геттер и сеттер на engine, значит поле долно быть приватное
+//теоретически машины все останавливаются и двигаются, поэтому интерфейсы лучше имплементировать сразу в базовый класс, чтобы что-нибудь не забыть
+
+2.
+было:
+class LightWeightCar extends Car implements Moveable{...}
+//странно , что не останавливается
+
+стало:
+class LightWeightCar extends Car{
+    @Override
+    void open() {...}
+
+    @Override
+    public void move() {...}
+
+    @Override
+    public void stop() {...}
+}
+
+3.
+было:
+class Lorry extends Car, Moveable, Stopable{..}
+//ошибка, класс не может наследоваться от интерфейсов, только имплементировать
+
+стало:
+class Lorry extends Car{
+    @Override
+    void open() {...}
+
+    @Override
+    public void move() {...}
+
+    @Override
+    public void stop() {...}
+}
